@@ -43,11 +43,36 @@ const showAlertDetails = (data, name) => {
                     <div class="col-md-4 w-25">
                         <img src="${singleNews.thumbnail_url}" class="img-fluid rounded-start p-3">
                     </div>
-                    <div class="col-md-8 d-flex">
+                    <div class="col-md-8 d-flex flex-column" >
                         <div class="card-body d-flex flex-column justify-content-center">
                             <h5 class="card-title">${singleNews.title}</h5>
                             <p class="card-text">${singleNews.details.slice(0,300)}...</p>
                             <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        </div>
+                        <div class="card-footer  bg-body p-3 d-flex justify-content-between">
+                            <div class="d-flex gap-2">
+                                <img src="${singleNews.author.img}" class="img-fluid rounded-5" style="height : 40px; width : 40px" >
+                                <div>
+                                    <p class="m-0">${singleNews.author.name} </p>
+                                    <p class="m-0">${singleNews.author.published_date} </p>
+                                </div>
+                            </div> 
+
+                            <div class="my-auto">
+                            <p class="m-0"><i class="fas fa-eye"> </i> ${singleNews.total_view}</p>
+                            </div> 
+
+                            <div class="my-auto">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star-half-stroke"></i>
+                            </div> 
+
+                            <div class="my-auto">
+                            <i class="fa-solid fa-arrow-right text-success"></i>
+                            </div> 
                         </div>
                     </div>
                 </div>
