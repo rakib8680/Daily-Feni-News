@@ -30,9 +30,31 @@ const getId = async (id, name) => {
 
 // show category name and id inside alert box 
 const showAlertDetails = (data, name) => {
-    console.log(data, name);
+    // console.log(data);
     document.getElementById('item-found-amount').innerText = data.length;
-    document.getElementById('item-found-name').innerText = name
+    document.getElementById('item-found-name').innerText = name;
+
+    const allNews = document.getElementById('all-news')
+    allNews.innerHTML = '';
+    data.forEach(singleNews => {
+        allNews.innerHTML +=`
+            <div class="card mb-3 border-0 rounded-4 shadow-md" >
+                <div class="row g-0">
+                    <div class="col-md-4 w-25">
+                        <img src="${singleNews.thumbnail_url}" class="img-fluid rounded-start p-3">
+                    </div>
+                    <div class="col-md-8 d-flex">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <h5 class="card-title">${singleNews.title}</h5>
+                            <p class="card-text">${singleNews.details.slice(0,300)}...</p>
+                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `
+        console.log(singleNews);
+    })
 }
 
 
