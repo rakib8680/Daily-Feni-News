@@ -15,4 +15,4 @@ const displayData = datas => {
 }
 
 
-loadData()
+// loadData()
