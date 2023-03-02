@@ -73,7 +73,7 @@ const showAlertDetails = (data, name) => {
                             </div> 
 
                             <div class="my-auto">
-                            <i class="fa-solid fa-arrow-right text-success" onClick="loadNewsDetails('${_id}')"></i>
+                            <i class=" fa-solid fa-arrow-right text-success" onClick="loadNewsDetails('${_id}')" data-bs-toggle="modal" data-bs-target="#newsModal"></i>
                             </div> 
                         </div>
                     </div>
@@ -94,5 +94,39 @@ const loadNewsDetails = async id => {
 
 const displayNewsDetails = details => {
     console.log(details);
+
+    const modalTitle = document.getElementById('newsModalLabel');
+    const modalBody = document.getElementById('modal-body')
+
+
+
+    const { thumbnail_url, title, author } = details;
+    modalBody.innerHTML = '';
+    modalBody.innerHTML += `
+            <div class="card mb-3 border-0 rounded-4 shadow-md" >
+                <div class="row g-0">
+                    <div class="col-md-4 img-fluid">
+                        <img src="${thumbnail_url}" class="img-fluid rounded-start p-3">
+                    </div>
+                    <div class="col-md-12 d-flex flex-column" >
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <h5 class="card-title">${title}</h5>
+                            <p class="card-text">${details.details}</p>
+                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        </div>
+                        <div class="card-footer  bg-body p-3 d-flex justify-content-between">
+                            <div class="d-flex gap-2">
+                                <img src="${author.img}" class="img-fluid rounded-5" style="height : 40px; width : 40px" >
+                                <div>
+                                    <p class="m-0">${author.name} </p>
+                                    <p class="m-0">${author.published_date} </p>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `
+
 }
 
