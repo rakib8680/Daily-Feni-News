@@ -37,29 +37,31 @@ const showAlertDetails = (data, name) => {
     const allNews = document.getElementById('all-news')
     allNews.innerHTML = '';
     data.forEach(singleNews => {
-        allNews.innerHTML +=`
+        const { _id, thumbnail_url, title, details, author, total_view } = singleNews;
+
+        allNews.innerHTML += `
             <div class="card mb-3 border-0 rounded-4 shadow-md" >
                 <div class="row g-0">
                     <div class="col-md-4 w-25">
-                        <img src="${singleNews.thumbnail_url}" class="img-fluid rounded-start p-3">
+                        <img src="${thumbnail_url}" class="img-fluid rounded-start p-3">
                     </div>
                     <div class="col-md-8 d-flex flex-column" >
                         <div class="card-body d-flex flex-column justify-content-center">
-                            <h5 class="card-title">${singleNews.title}</h5>
-                            <p class="card-text">${singleNews.details.slice(0,300)}...</p>
+                            <h5 class="card-title">${title}</h5>
+                            <p class="card-text">${details.slice(0, 300)}...</p>
                             <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                         </div>
                         <div class="card-footer  bg-body p-3 d-flex justify-content-between">
                             <div class="d-flex gap-2">
-                                <img src="${singleNews.author.img}" class="img-fluid rounded-5" style="height : 40px; width : 40px" >
+                                <img src="${author.img}" class="img-fluid rounded-5" style="height : 40px; width : 40px" >
                                 <div>
-                                    <p class="m-0">${singleNews.author.name} </p>
-                                    <p class="m-0">${singleNews.author.published_date} </p>
+                                    <p class="m-0">${author.name} </p>
+                                    <p class="m-0">${author.published_date} </p>
                                 </div>
                             </div> 
 
                             <div class="my-auto">
-                            <p class="m-0"><i class="fas fa-eye"> </i> ${singleNews.total_view}</p>
+                            <p class="m-0"><i class="fas fa-eye"> </i> ${total_view}</p>
                             </div> 
 
                             <div class="my-auto">
@@ -71,15 +73,26 @@ const showAlertDetails = (data, name) => {
                             </div> 
 
                             <div class="my-auto">
-                            <i class="fa-solid fa-arrow-right text-success"></i>
+                            <i class="fa-solid fa-arrow-right text-success" onClick="loadNewsDetails('${_id}')"></i>
                             </div> 
                         </div>
                     </div>
                 </div>
             </div>
         `
-        console.log(singleNews);
     })
-}
+};
 
+
+// get news details 
+const loadNewsDetails = async id => {
+    const url = `https://openapi.programming-hero.com/api/news/${id}`
+    const res = await fetch(url);
+    const moreData = await res.json();
+    displayNewsDetails(moreData.data[0]);
+};
+
+const displayNewsDetails = details => {
+    console.log(details);
+}
 
