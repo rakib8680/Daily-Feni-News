@@ -1,4 +1,5 @@
 
+let fetchData = [];
 
 const loadData = async () => {
     const url = `https://openapi.programming-hero.com/api/news/categories`
@@ -24,13 +25,14 @@ const getId = async (id, name) => {
     const url = `https://openapi.programming-hero.com/api/news/category/${id}`
     const res = await fetch(url);
     const categoryNews = await res.json();
+    fetchData = categoryNews.data;
     showAlertDetails(categoryNews.data, name);
 };
 
 
 // show category name and id inside alert box 
 const showAlertDetails = (data, name) => {
-    // console.log(data);
+    console.log(data);
     document.getElementById('item-found-amount').innerText = data.length;
     document.getElementById('item-found-name').innerText = name;
 
@@ -55,13 +57,13 @@ const showAlertDetails = (data, name) => {
                             <div class="d-flex gap-2">
                                 <img src="${author.img}" class="img-fluid rounded-5" style="height : 40px; width : 40px" >
                                 <div>
-                                    <p class="m-0">${author.name} </p>
+                                    <p class="m-0">${author.name ? author.name : 'Not Available'} </p>
                                     <p class="m-0">${author.published_date} </p>
                                 </div>
                             </div> 
 
                             <div class="my-auto">
-                            <p class="m-0"><i class="fas fa-eye"> </i> ${total_view}</p>
+                            <p class="m-0"><i class="fas fa-eye"> </i> ${total_view ? total_view : 'Not Available'}</p>
                             </div> 
 
                             <div class="my-auto">
@@ -92,15 +94,16 @@ const loadNewsDetails = async id => {
     displayNewsDetails(moreData.data[0]);
 };
 
-const displayNewsDetails = details => {
-    console.log(details);
 
-    const modalTitle = document.getElementById('newsModalLabel');
+// display modal 
+const displayNewsDetails = details => {
+
+    // const modalTitle = document.getElementById('newsModalLabel');
     const modalBody = document.getElementById('modal-body')
 
 
 
-    const { thumbnail_url, title, author } = details;
+    const { thumbnail_url, title, author, total_view, others_info } = details;
     modalBody.innerHTML = '';
     modalBody.innerHTML += `
             <div class="card mb-3 border-0 rounded-4 shadow-md" >
@@ -110,23 +113,36 @@ const displayNewsDetails = details => {
                     </div>
                     <div class="col-md-12 d-flex flex-column" >
                         <div class="card-body d-flex flex-column justify-content-center">
-                            <h5 class="card-title">${title}</h5>
+                            <h5 class="card-title">${title} <span class="badge text-bg-warning">${others_info.is_trending ? 'Trending' : ''}</span>
+                            </h5>
                             <p class="card-text">${details.details}</p>
                             <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                         </div>
                         <div class="card-footer  bg-body p-3 d-flex justify-content-between">
-                            <div class="d-flex gap-2">
+                            <div class="d-flex gap-5">
                                 <img src="${author.img}" class="img-fluid rounded-5" style="height : 40px; width : 40px" >
                                 <div>
                                     <p class="m-0">${author.name} </p>
                                     <p class="m-0">${author.published_date} </p>
                                 </div>
+                                <div class="my-auto">
+                                    <p class="m-0"><i class="fas fa-eye"> </i> ${total_view}</p>
+                                </div> 
                             </div> 
                         </div>
                     </div>
                 </div>
             </div>
         `
+};
 
+
+
+// trending button 
+const showTrending = () => {
+    // console.log(fetchData)
+    const trendingNews = fetchData.filter(trendingData => trendingData.others_info.is_trending === true);
+    showAlertDetails(trendingNews, );
 }
+
 
