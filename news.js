@@ -142,7 +142,8 @@ const displayNewsDetails = details => {
 const showTrending = () => {
     // console.log(fetchData)
     const trendingNews = fetchData.filter(trendingData => trendingData.others_info.is_trending === true);
-    showAlertDetails(trendingNews, );
+    const categoryName = document.getElementById('item-found-name').innerText
+    showAlertDetails(trendingNews, categoryName );
 }
 
 
